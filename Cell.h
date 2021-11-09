@@ -4,8 +4,8 @@
 #include <QGraphicsItem>
 
 struct Position {
-    int x, y;
-    Position(int nx, int ny) : x(nx), y(ny) {};
+    int x_, y_;
+    Position(int x, int y) : x_(x), y_(y) {};
 };
 
 class Cell : public QObject, public QGraphicsItem {
@@ -20,9 +20,18 @@ public:
 
     void SetAlive(bool alive) { is_alive_ = alive; }
 
+    QRectF boundingRect() const override;
+    QPainterPath shape() const override;
+
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
+
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+
 private:
     Position *pos_;
     bool is_alive_;
+
     static const int WIDTH;
     static const int HEIGHT;
 };
