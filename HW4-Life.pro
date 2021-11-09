@@ -15,6 +15,7 @@ SOURCES += \
 HEADERS += \
     Cell.h \
     CellMap.h \
+    GraphBar.h \
     mainwindow.h
 
 FORMS += \
