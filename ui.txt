@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
-    <height>728</height>
+    <width>476</width>
+    <height>577</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>20</y>
-      <width>691</width>
+      <width>451</width>
       <height>51</height>
      </rect>
     </property>
@@ -87,17 +87,23 @@
      <rect>
       <x>10</x>
       <y>80</y>
-      <width>691</width>
-      <height>491</height>
+      <width>450</width>
+      <height>375</height>
      </rect>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
    </widget>
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>590</y>
-      <width>691</width>
+      <y>470</y>
+      <width>451</width>
       <height>80</height>
      </rect>
     </property>
@@ -167,12 +173,11 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>720</width>
+     <width>476</width>
      <height>21</height>
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
