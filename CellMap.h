@@ -11,16 +11,16 @@ public:
 
     void UpdateMap(CellMap *newMap);
 
-    Position * GetNextStep(Position *pos);
+    void NextStep();
 
-    void SetCellValue(Position *pos);
+    void SetCellValue(int index);
 
-    Cell * get_cell_at_pos(Position pos) { return map_[pos.x][pos.y]; }
+    Cell * get_cell(int index) { return cells_[index]; }
 
     static double get_percent_alive();
 
 private:
-    Cell *map_[20][20];
+    Cell *cells_[200];
 };
 
 #endif // CELLMAP_H
