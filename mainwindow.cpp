@@ -4,6 +4,8 @@
 #include <QTime>
 #include <QDebug>
 
+#include "Cell.h"
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow
@@ -18,16 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     qsrand(static_cast<unsigned>(QTime::currentTime().msec()));
 
-    // Add grid border
-//    int frameWidth = view->frameSize().width();
-//    int frameHeight = view->frameSize().height();
-//    int margin = 50;
-//    int marginBottom = 150;
-//    scene->addLine(margin, margin, frameWidth - margin, margin);
-//    scene->addLine(margin, frameHeight - marginBottom, frameWidth - margin, frameHeight - marginBottom);
-//    scene->addLine(margin, margin, margin, frameHeight - marginBottom);
-//    scene->addLine(frameWidth - margin, margin, frameWidth - margin, frameHeight - marginBottom);
-
+    // Define border variables
     int gridWidth = 400;
     int gridHeight = 200;
     int graphWidth = 400;
@@ -46,6 +39,11 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addLine(margin, graphMargin + graphHeight, margin + graphWidth, graphMargin + graphHeight);
     scene->addLine(margin, graphMargin, margin, graphMargin + graphHeight);
     scene->addLine(margin + graphWidth, graphMargin, margin + graphWidth, graphMargin + graphHeight);
+
+    // Add some cells for testing
+    for (int i = 0; i < 200; i++) {
+        scene->addItem(new Cell(i, true));
+    }
 }
 
 MainWindow::~MainWindow() {

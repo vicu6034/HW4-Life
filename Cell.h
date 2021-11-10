@@ -3,28 +3,36 @@
 
 #include <QGraphicsItem>
 
-struct Position {
-    int x, y;
-    Position(int nx, int ny) : x(nx), y(ny) {};
-};
-
 class Cell : public QObject, public QGraphicsItem {
     Q_OBJECT
 
 public:
-    Cell(int x, int y, bool active);
+    Cell(int index, bool alive);
 
     bool is_alive() { return is_alive_; }
 
-    Position * get_position() { return pos_; }
+    std::pair<int, int> get_position() const {
+        return std::pair<int, int> { (index_ % 20) * 20 + 25, (index_ / 20) * 20 + 25 };
+    }
 
     void SetAlive(bool alive) { is_alive_ = alive; }
 
+    QRectF boundingRect() const override;
+    QPainterPath shape() const override;
+
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
+
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+
+signals:
+    void CellSelected(Cell * c);
+
 private:
-    Position *pos_;
+    int index_;
     bool is_alive_;
-    static const int WIDTH;
-    static const int HEIGHT;
+
+    static const int WIDTH = 20;
 };
 
 #endif // CELL_H
