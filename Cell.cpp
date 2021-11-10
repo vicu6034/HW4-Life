@@ -6,7 +6,6 @@
 
 #include "Cell.h"
 
-//in point.cpp
 void Cell::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     qDebug() << "cell clicked!";

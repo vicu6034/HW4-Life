@@ -28,6 +28,9 @@ public:
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 
+signals:
+    void CellSelected(Cell * c);
+
 private:
     Position *pos_;
     bool is_alive_;
