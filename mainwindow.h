@@ -39,5 +39,6 @@ private:
     bool paused_;
 
     QTimer *timer_;
+    int timer_speed_;
 };
 #endif // MAINWINDOW_H

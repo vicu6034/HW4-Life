@@ -4,6 +4,7 @@
 #include <QTime>
 #include <QDebug>
 #include <QTimer>
+#include <QString>
 
 #include "Cell.h"
 #include "CellMap.h"
@@ -53,9 +54,9 @@ MainWindow::MainWindow(QWidget *parent)
     // Initialize timer
     timer_ = new QTimer(this);
     connect(timer_, SIGNAL(timeout()), this, SLOT(TimerSlot()));
-    timer_->start(1000);
+    timer_speed_ = 0;
 
-    ui->speedLabel->setText("Speed: 1000");
+    ui->speedLabel->setText("Speed: 0");
 }
 
 void MainWindow::TimerSlot() {
@@ -73,7 +74,7 @@ void MainWindow::on_stepButton_clicked() {
 
 
 void MainWindow::on_playButton_clicked() {
-    timer_->start();
+    timer_->start(timer_speed_);
 }
 
 
@@ -83,5 +84,8 @@ void MainWindow::on_pauseButton_clicked() {
 
 
 void MainWindow::on_speedSlider_valueChanged(int value) {
-
+    timer_speed_ = value;
+    std::string s = "Speed: " + std::to_string(timer_speed_);
+    QString q(const_cast<char*>(s.c_str()));
+    ui->speedLabel->setText(q);
 }
