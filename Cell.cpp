@@ -10,6 +10,14 @@ Cell::Cell(int index, bool alive) : index_(index), is_alive_(alive) {}
 
 void Cell::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     qDebug() << "cell clicked!";
+
+    if (event->button() == Qt::LeftButton) {
+        //cell becomes alive
+        is_alive_ = true;
+    } else if (event->button() == Qt::RightButton && is_alive_) {
+        //cell becomes dead
+        is_alive_ = false;
+    }
 }
 
 void Cell::SetAlive(bool alive) {
