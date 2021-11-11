@@ -7,29 +7,32 @@ class Cell : public QObject, public QGraphicsItem {
     Q_OBJECT
 
 public:
+    // paramterized constructor (index, alive)
     Cell(int index, bool alive);
 
-    int get_index() {return index_;}
-    bool is_alive() { return is_alive_; }
-
-    void SetAlive(bool alive);
-    void SetNeighbors(std::vector<Cell*> neighbors) {neighbors_ = neighbors;}
-
+    // getters index, alive, position
+    int get_index() const { return index_; }
+    bool is_alive() const { return is_alive_; }
     std::pair<int, int> get_position() const {
         return std::pair<int, int> { (index_ % 20) * 20 + 25, (index_ / 20) * 20 + 25 };
     }
 
+    // setters neighbors, alive
+    void SetNeighbors(std::vector<Cell*> neighbors) { neighbors_ = neighbors; }
+    void SetAlive(bool alive);
+
+    // method to determine what state the cell should be in next
+    bool nextIteration() const;
+
+    // Qt bounding and drawing methods
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
 
-    bool nextIteration();
-
 protected:
+    // handles what happens when the mouse is clicked
+    // revive cell for left click, kill cell for right click
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
-
-signals:
-    void CellSelected(Cell * c);
 
 private:
     int index_;

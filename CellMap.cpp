@@ -3,11 +3,27 @@
 #include "CellMap.h"
 #include "Cell.h"
 
+// Helper to return true/false with 50% chance
+// Used to determine if a specific cell should be alive or dead
 bool chooseAlive() {
-    int rando = rand() % 2;
+    int rando = arc4random() % 2;
     return (rando == 0);
 }
 
+// Default constructor for CellMap
+CellMap::CellMap() {
+    // create cells with 50% chance of being alive
+    for (unsigned int i = 0; i < NUM_CELLS; i++) {
+        cells_[i] = new Cell(i, arc4random() % 2);
+    }
+    // assign neighbors after all cells created
+    for (unsigned int i = 0; i < NUM_CELLS; i++) {
+        cells_[i]->SetNeighbors(get_neighbors(i));
+    }
+}
+
+// Determine all the neighbors to a cell
+// Return by vector of pointers
 std::vector<Cell*> CellMap::get_neighbors(int index) {
     // 10 rows x 20 columns (200 cells)
     // Calculate neighbor indices
@@ -45,38 +61,29 @@ std::vector<Cell*> CellMap::get_neighbors(int index) {
     };
 }
 
-CellMap::CellMap() {
-    // create cells with 50% chance of being alive
-    for (int i = 0; i < NUM_CELLS; i++) {
-        cells_[i] = new Cell(i, arc4random() % 2);
-    }
-    // assign neighbors after all cells created
-    for (int i = 0; i < NUM_CELLS; i++) {
-        cells_[i]->SetNeighbors(get_neighbors(i));
-    }
-}
-
+// Determine the next state for the entire map
 void CellMap::Step() {
     // create temp array
     Cell * temp[NUM_CELLS];
     // fill temp with new pointers
-    for (int i = 0; i < NUM_CELLS; i ++) {
+    for (unsigned int i = 0; i < NUM_CELLS; i ++) {
         temp[i] = new Cell(i, cells_[i]->nextIteration());
     }
     // set cells_ to temp
-    for (int i = 0; i < NUM_CELLS; i ++) {
+    for (unsigned int i = 0; i < NUM_CELLS; i ++) {
         cells_[i] = temp[i];
     }
     // reset neighbors
-    for (int i = 0; i < NUM_CELLS; i++) {
+    for (unsigned int i = 0; i < NUM_CELLS; i++) {
         cells_[i]->SetNeighbors(get_neighbors(i));
     }
     // seperate for loops because we need to do each step seperately to not mess up pointers
 }
 
+// Return what percent of cells are currently alive
 double CellMap::get_percent_alive() {
     int num_alive = 0;
-    for (int i = 0; i < NUM_CELLS; i++) {
+    for (unsigned int i = 0; i < NUM_CELLS; i++) {
         if (cells_[i]->is_alive()) num_alive++;
     }
     return float(num_alive/NUM_CELLS);

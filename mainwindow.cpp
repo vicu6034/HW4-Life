@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow
 ) {
+    // Setup UI and Scene
     ui->setupUi(this);
 
     QGraphicsView * view = ui->plotGraphicsView;
