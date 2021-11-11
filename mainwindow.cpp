@@ -3,8 +3,10 @@
 
 #include <QTime>
 #include <QDebug>
+#include <QTimer>
 
 #include "Cell.h"
+#include "CellMap.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -41,12 +43,47 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addLine(margin + graphWidth, graphMargin, margin + graphWidth, graphMargin + graphHeight);
 
     // Add some cells for testing
+    Cell *cells[200];
     for (int i = 0; i < 200; i++) {
-        scene->addItem(new Cell(i, true));
+        Cell *c = new Cell(i, arc4random() % 2);
+        cells[i] = c;
+        scene->addItem(c);
     }
+
+    // Initialize CellMap
+    cell_map_ = new CellMap(cells);
+
+    // Initialize timer
+    timer_ = new QTimer(this);
+    connect(timer_, SIGNAL(timeout()), this, SLOT(TimerSlot()));
+    timer_->start(1000);
+}
+
+void MainWindow::TimerSlot() {
+    qDebug() << "update...";
+    cell_map_->NextStep();
 }
 
 MainWindow::~MainWindow() {
     delete ui;
 }
 
+
+void MainWindow::on_stepButton_clicked() {
+
+}
+
+
+void MainWindow::on_playButton_clicked() {
+
+}
+
+
+void MainWindow::on_pauseButton_clicked() {
+
+}
+
+
+void MainWindow::on_speedSlider_valueChanged(int value) {
+
+}
