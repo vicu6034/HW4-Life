@@ -6,9 +6,7 @@
 
 #include "Cell.h"
 
-Cell::Cell(int index, bool alive) : index_(index), is_alive_(alive) {
-
-}
+Cell::Cell(int index, bool alive) : index_(index), is_alive_(alive) {}
 
 void Cell::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     qDebug() << "cell clicked!";
@@ -49,4 +47,8 @@ void Cell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     std::pair<int, int> pos = get_position();
     painter->drawRect(QRect(pos.first, pos.second, WIDTH, WIDTH));
     painter->setBrush(b);
+}
+
+bool Cell::nextIteration() {
+
 }

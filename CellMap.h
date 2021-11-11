@@ -1,19 +1,20 @@
 #ifndef CELLMAP_H
 #define CELLMAP_H
 
+#include <vector>
+
 class Cell;
 
 class CellMap {
 public:
-    CellMap(Cell *cells[]);
+    CellMap();
 
-    void UpdateMap(CellMap *newMap);
+    void Step();
 
-    void NextStep();
-
+    std::vector<Cell*> get_neighbors(int index);
     Cell * get_cell(int index) { return cells_[index]; }
 
-    static double get_percent_alive();
+    double get_percent_alive();
 
     static const int NUM_CELLS = 200;
 
