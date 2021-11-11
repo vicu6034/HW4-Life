@@ -8,29 +8,47 @@ bool chooseAlive() {
     return (rando == 0);
 }
 
-// NEEDS TO BE FINISHED
 std::vector<Cell*> CellMap::get_neighbors(int index) {
-    std::vector<Cell*> neighbors;
+    // 10 rows x 20 columns (200 cells)
+    // Calculate neighbor indices
+    //      a b c
+    //      d   f
+    //      g h i
 
-    /* if we need to use special cases, hoping you got the math tricks
-    if (index == 0) {
+    // Left neighbor
+    int d = index - 1;
+    if (d % 10 == 9) d += 20;
 
-    } else if (index < 20) {
+    // Right neighbor
+    int f = index + 1;
+    if (f % 10 == 0) f -= 20;
 
-    } ...
-    */
+    // Top neighbors
+    int a = (d + 180) % 200;
+    int b = (index + 180) % 200;
+    int c = (f + 180) % 200;
 
-    //neighbors to right and left
-    neighbors.push_back(get_cell(index+1));
-    neighbors.push_back(get_cell(index-1));
+    // Bottom neighbors
+    int g = (d + 20) % 200;
+    int h = (index + 20) % 200;
+    int i = (f + 20) % 200;
 
-    return neighbors;
+    return std::vector<Cell *> {
+        cells_[a],
+        cells_[b],
+        cells_[c],
+        cells_[d],
+        cells_[f],
+        cells_[g],
+        cells_[h],
+        cells_[i]
+    };
 }
 
 CellMap::CellMap() {
     // create cells with 50% chance of being alive
     for (int i = 0; i < NUM_CELLS; i++) {
-        cells_[i] = new Cell(i, chooseAlive());
+        cells_[i] = new Cell(i, arc4random() % 2);
     }
     // assign neighbors after all cells created
     for (int i = 0; i < NUM_CELLS; i++) {
@@ -53,7 +71,7 @@ void CellMap::Step() {
     for (int i = 0; i < NUM_CELLS; i++) {
         cells_[i]->SetNeighbors(get_neighbors(i));
     }
-    // seperate for loops ebcause we need to do each step seperately to not mess up pointers
+    // seperate for loops because we need to do each step seperately to not mess up pointers
 }
 
 double CellMap::get_percent_alive() {
