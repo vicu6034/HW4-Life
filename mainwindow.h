@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 
+class CellMap;
+class Cell;
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -16,10 +19,25 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_stepButton_clicked();
+
+    void on_playButton_clicked();
+
+    void on_pauseButton_clicked();
+
+    void on_speedSlider_valueChanged(int value);
+
+    void TimerSlot();
 
 private:
     Ui::MainWindow *ui;
-
     QGraphicsScene *scene;
+
+    CellMap *cell_map_;
+    double game_speed_;
+    bool paused_;
+
+    QTimer *timer_;
 };
 #endif // MAINWINDOW_H
