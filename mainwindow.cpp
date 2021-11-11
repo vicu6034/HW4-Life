@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     // Initialize CellMap
-    cell_map_ = new CellMap(cells);
+    cell_map_ = new CellMap();
 
     // Initialize timer
     timer_ = new QTimer(this);
@@ -61,7 +61,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::TimerSlot() {
     qDebug() << "update...";
-    cell_map_->NextStep();
+    cell_map_->Step();
 }
 
 MainWindow::~MainWindow() {

@@ -50,5 +50,20 @@ void Cell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 }
 
 bool Cell::nextIteration() {
-
+    // set ret v to current status
+    bool ret = is_alive_;
+    // get num of live neighbors
+    int liveNeighbors = 0;
+    for (unsigned int i = 0; i < neighbors_.size(); i++) {
+        if (neighbors_[i]->is_alive()) liveNeighbors++;
+    }
+    // handle logic based on if (this) is alive or dead
+    if (is_alive_) {
+        // cases of under and overpopulation
+        if ((liveNeighbors < 2) || (liveNeighbors > 3)) ret = false;
+    } else {
+        // case of reproduction
+        if (liveNeighbors == 3) ret = true;
+    }
+    return ret;
 }
