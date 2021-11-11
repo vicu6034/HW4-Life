@@ -6,14 +6,25 @@
 
 #include "Cell.h"
 
-Cell::Cell(int index, bool alive) : index_(index), is_alive_(alive) {
+Cell::Cell(int index, bool alive) : index_(index), is_alive_(alive) {}
 
-}
-
+// Have a cell become alive for left click, and dead for right click
 void Cell::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     qDebug() << "cell clicked!";
+
+    if (event->button() == Qt::LeftButton && !is_alive_) {
+        //for left click cell becomes alive
+        is_alive_ = true;
+        update();
+    } else if (event->button() == Qt::RightButton && is_alive_) {
+        //for right click cell becomes dead
+        is_alive_ = false;
+        update();
+    }
+
 }
 
+// Set cell alive
 void Cell::SetAlive(bool alive) {
     is_alive_ = alive;
     update();
@@ -49,4 +60,22 @@ void Cell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     std::pair<int, int> pos = get_position();
     painter->drawRect(QRect(pos.first, pos.second, WIDTH, WIDTH));
     painter->setBrush(b);
+}
+
+// Get the state the cell should be in for the next step
+bool Cell::nextIteration() const {
+    // get num of live neighbors
+    int liveNeighbors = 0;
+    for (Cell *c : neighbors_) {
+        if (c->is_alive()) liveNeighbors++;
+    }
+
+    // handle logic based on if (this) is alive or dead
+    if (is_alive_) {
+        // Whether or not to stay alive
+        return liveNeighbors == 2 || liveNeighbors == 3;
+    } else {
+        // case of reproduction
+        return liveNeighbors == 3;
+    }
 }
