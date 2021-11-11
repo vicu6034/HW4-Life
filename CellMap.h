@@ -23,7 +23,7 @@ public:
     static const int NUM_CELLS = 200;
 
 private:
-    Cell *cells_[NUM_CELLS];
+    std::vector<Cell *> cells_;
 };
 
 #endif // CELLMAP_H

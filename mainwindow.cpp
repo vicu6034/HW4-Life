@@ -43,25 +43,22 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addLine(margin, graphMargin, margin, graphMargin + graphHeight);
     scene->addLine(margin + graphWidth, graphMargin, margin + graphWidth, graphMargin + graphHeight);
 
-    // Add some cells for testing
-    Cell *cells[200];
-    for (int i = 0; i < 200; i++) {
-        Cell *c = new Cell(i, arc4random() % 2);
-        cells[i] = c;
-        scene->addItem(c);
-    }
-
     // Initialize CellMap
     cell_map_ = new CellMap();
+
+    for (int i = 0; i < CellMap::NUM_CELLS; i++) {
+        scene->addItem(cell_map_->get_cell(i));
+    }
 
     // Initialize timer
     timer_ = new QTimer(this);
     connect(timer_, SIGNAL(timeout()), this, SLOT(TimerSlot()));
     timer_->start(1000);
+
+    ui->speedLabel->setText("Speed: 1000");
 }
 
 void MainWindow::TimerSlot() {
-    qDebug() << "update...";
     cell_map_->Step();
 }
 
@@ -71,17 +68,17 @@ MainWindow::~MainWindow() {
 
 
 void MainWindow::on_stepButton_clicked() {
-
+    cell_map_->Step();
 }
 
 
 void MainWindow::on_playButton_clicked() {
-
+    timer_->start();
 }
 
 
 void MainWindow::on_pauseButton_clicked() {
-
+    timer_->stop();
 }
 
 
