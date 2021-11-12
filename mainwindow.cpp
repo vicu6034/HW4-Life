@@ -56,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent)
     timer_ = new QTimer(this);
     connect(timer_, SIGNAL(timeout()), this, SLOT(TimerSlot()));
 
-    GraphBar *b = new GraphBar(cell_map_->get_percent_alive());
+    GraphBar *b = new GraphBar(cell_map_->get_num_alive() / 2);
     b->SetIndex(0);
     scene->addItem(b);
     graph_bars_.push_back(b);
@@ -65,15 +65,54 @@ MainWindow::MainWindow(QWidget *parent)
     ui->speedLabel->setText("Speed: 0");
 
     current_turn_ = 1;
-    std::string s = "Turn: " + std::to_string(current_turn_);
-    QString q(const_cast<char*>(s.c_str()));
-    ui->turnLabel->setText(q);
+    std::string turn_str = "Turn: " + std::to_string(current_turn_);
+    QString turn_q(const_cast<char*>(turn_str.c_str()));
+    ui->turnLabel->setText(turn_q);
+
+    int num_alive = cell_map_->get_num_alive();
+    std::string pop_str = "Population: " + std::to_string(num_alive) + " (" + std::to_string(num_alive/2) + "%)";
+    QString pop_q(const_cast<char*>(pop_str.c_str()));
+    ui->popLabel->setText(pop_q);
 }
 
 void MainWindow::TimerSlot() {
     cell_map_->Step();
 
-    GraphBar *b = new GraphBar(cell_map_->get_percent_alive());
+    GraphBar *b = new GraphBar(cell_map_->get_num_alive() / 2);
+    graph_bars_.insert(graph_bars_.begin(), b);
+    scene->addItem(b);
+    for (unsigned int i = 0; i < graph_bars_.size(); i++) {
+        GraphBar *currentBar = graph_bars_[i];
+        scene->removeItem(currentBar);
+        if (i < 20) {
+            currentBar->SetIndex(i);
+            scene->addItem(currentBar);
+        } else {
+            graph_bars_.pop_back();
+            break;
+        }
+    }
+
+    current_turn_++;
+    std::string turn_str = "Turn: " + std::to_string(current_turn_);
+    QString turn_q(const_cast<char*>(turn_str.c_str()));
+    ui->turnLabel->setText(turn_q);
+
+    int num_alive = cell_map_->get_num_alive();
+    std::string pop_str = "Population: " + std::to_string(num_alive) + " (" + std::to_string(num_alive/2) + "%)";
+    QString pop_q(const_cast<char*>(pop_str.c_str()));
+    ui->popLabel->setText(pop_q);
+}
+
+MainWindow::~MainWindow() {
+    delete ui;
+}
+
+
+void MainWindow::on_stepButton_clicked() {
+    cell_map_->Step();
+
+    GraphBar *b = new GraphBar(cell_map_->get_num_alive() / 2);
     graph_bars_.insert(graph_bars_.begin(), b);
     scene->addItem(b);
     for (unsigned int i = 0; i < graph_bars_.size(); i++) {
@@ -92,19 +131,11 @@ void MainWindow::TimerSlot() {
     std::string s = "Turn: " + std::to_string(current_turn_);
     QString q(const_cast<char*>(s.c_str()));
     ui->turnLabel->setText(q);
-}
 
-MainWindow::~MainWindow() {
-    delete ui;
-}
-
-
-void MainWindow::on_stepButton_clicked() {
-    cell_map_->Step();
-    current_turn_++;
-    std::string s = "Turn: " + std::to_string(current_turn_);
-    QString q(const_cast<char*>(s.c_str()));
-    ui->turnLabel->setText(q);
+    int num_alive = cell_map_->get_num_alive();
+    std::string pop_str = "Population: " + std::to_string(num_alive) + " (" + std::to_string(num_alive/2) + "%)";
+    QString pop_q(const_cast<char*>(pop_str.c_str()));
+    ui->popLabel->setText(pop_q);
 }
 
 

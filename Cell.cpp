@@ -21,7 +21,6 @@ void Cell::mousePressEvent(QGraphicsSceneMouseEvent *event) {
         is_alive_ = false;
         update();
     }
-
 }
 
 // Set cell alive
@@ -78,4 +77,5 @@ bool Cell::nextIteration() const {
         // case of reproduction
         return liveNeighbors == 3;
     }
+    return true;
 }

@@ -24,8 +24,13 @@ std::vector<Cell*> CellMap::get_neighbors(int index) {
     //      d   f
     //      g h i
 
-    int d = (index + 19) % 20;
-    int f = (index + 21) % 20;
+    int d = index - 1;
+    if (d % 20 == 19) { d += 20; }
+    if (d < 0) { d += 20; }
+
+    int f = index + 1;
+    if (f % 20 == 0) { f -= 20; }
+
     int a = (d + 180) % 200;
     int b = (index + 180) % 200;
     int c = (f + 180) % 200;
@@ -57,10 +62,10 @@ void CellMap::Step() {
 }
 
 // Return what percent of cells are currently alive
-int CellMap::get_percent_alive() {
+int CellMap::get_num_alive() {
     int num_alive = 0;
     for (unsigned int i = 0; i < NUM_CELLS; i++) {
         if (cells_[i]->is_alive()) num_alive++;
     }
-    return num_alive / 2;
+    return num_alive;
 }
