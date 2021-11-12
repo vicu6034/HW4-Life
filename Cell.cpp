@@ -45,9 +45,9 @@ QPainterPath Cell::shape() const {
 }
 
 // Set cell visibility traits (color, size)
-void Cell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+void Cell::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) {
     Q_UNUSED(widget);
-    Q_UNUSED(option);
+    Q_UNUSED(item);
 
     QBrush b = painter->brush();
 

@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     Cell.cpp \
     CellMap.cpp \
+    GraphBar.cpp \
     main.cpp \
     mainwindow.cpp
 

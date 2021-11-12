@@ -6,6 +6,7 @@
 
 class CellMap;
 class Cell;
+class GraphBar;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -35,8 +36,7 @@ private:
     QGraphicsScene *scene;
 
     CellMap *cell_map_;
-    double game_speed_;
-    bool paused_;
+    std::vector<GraphBar *> graph_bars_;
 
     QTimer *timer_;
     int timer_speed_;
