@@ -4,6 +4,7 @@
 #include <QTime>
 #include <QDebug>
 #include <QTimer>
+#include <QString>
 
 #include "Cell.h"
 #include "CellMap.h"
@@ -53,13 +54,21 @@ MainWindow::MainWindow(QWidget *parent)
     // Initialize timer
     timer_ = new QTimer(this);
     connect(timer_, SIGNAL(timeout()), this, SLOT(TimerSlot()));
-    timer_->start(1000);
+    timer_speed_ = 0;
+    ui->speedLabel->setText("Speed: 0");
 
-    ui->speedLabel->setText("Speed: 1000");
+    current_turn_ = 1;
+    std::string s = "Turn: " + std::to_string(current_turn_);
+    QString q(const_cast<char*>(s.c_str()));
+    ui->turnLabel->setText(q);
 }
 
 void MainWindow::TimerSlot() {
     cell_map_->Step();
+    current_turn_++;
+    std::string s = "Turn: " + std::to_string(current_turn_);
+    QString q(const_cast<char*>(s.c_str()));
+    ui->turnLabel->setText(q);
 }
 
 MainWindow::~MainWindow() {
@@ -69,11 +78,23 @@ MainWindow::~MainWindow() {
 
 void MainWindow::on_stepButton_clicked() {
     cell_map_->Step();
+    current_turn_++;
+    std::string s = "Turn: " + std::to_string(current_turn_);
+    QString q(const_cast<char*>(s.c_str()));
+    ui->turnLabel->setText(q);
 }
 
 
 void MainWindow::on_playButton_clicked() {
-    timer_->start();
+    if (timer_speed_ == 0) {
+        timer_->start(750);
+        ui->speedSlider->setValue(50);
+        std::string s = "Speed: " + std::to_string(50);
+        QString q(const_cast<char*>(s.c_str()));
+        ui->speedLabel->setText(q);
+    } else {
+        timer_->start(timer_speed_);
+    }
 }
 
 
@@ -83,5 +104,13 @@ void MainWindow::on_pauseButton_clicked() {
 
 
 void MainWindow::on_speedSlider_valueChanged(int value) {
-
+    if (value == 0) {
+        timer_->stop();
+    } else {
+        timer_speed_ = 1500 - (value * 15);
+        timer_->start(timer_speed_);
+    }
+    std::string s = "Speed: " + std::to_string(value);
+    QString q(const_cast<char*>(s.c_str()));
+    ui->speedLabel->setText(q);
 }
