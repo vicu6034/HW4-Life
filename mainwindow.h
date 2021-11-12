@@ -40,5 +40,6 @@ private:
 
     QTimer *timer_;
     int timer_speed_;
+    int current_turn_;
 };
 #endif // MAINWINDOW_H
