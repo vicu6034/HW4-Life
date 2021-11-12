@@ -6,9 +6,10 @@
 
 #include "Cell.h"
 
-Cell::Cell(int index, bool alive) : index_(index), is_alive_(alive) {}
-
-// Have a cell become alive for left click, and dead for right click
+/*
+ * Have a cell become alive for left click, and dead for right click
+ * @param event mouse click that is caught
+*/
 void Cell::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     qDebug() << "cell clicked!";
 
@@ -23,8 +24,12 @@ void Cell::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     }
 }
 
-// Set cell alive
+/*
+ * Set cell alive status
+ * @param event mouse click that is caught
+*/
 void Cell::SetAlive(bool alive) {
+    // call update so the color changes with the alive change
     is_alive_ = alive;
     update();
 }

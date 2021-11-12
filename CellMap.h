@@ -1,3 +1,10 @@
+/*
+ * CellMap Header
+ * Implements a vector of Cells to be displayed by MainWindow
+ * CSCI 3010 Homework 4
+ * By: Vincent Curran & Philip Knott
+*/
+
 #ifndef CELLMAP_H
 #define CELLMAP_H
 
@@ -8,23 +15,26 @@ class GraphBar;
 
 class CellMap {
 public:
-    // Default constructor
+    // default constructor
     CellMap();
 
-    // Get a cell by indec
+    // get a cell by index
     Cell * get_cell(int index) { return cells_[index]; }
-    // Get percent of alive cells
+    // get percent of alive cells
     int get_num_alive();
 
-    // Method to determine the next cell map
+    // method to determine the next cell map
     void Step();
-    // Method to find all the neighbors of a cell
+
+    // method to find all the neighbors of a cell
     std::vector<Cell*> get_neighbors(int index);
 
     static const int NUM_CELLS = 200;
 
 private:
+    // vector of cells
     std::vector<Cell *> cells_;
-};
+
+}; // class CellMap
 
 #endif // CELLMAP_H
