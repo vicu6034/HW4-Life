@@ -48,6 +48,8 @@ private:
     // represents if cell is alive or dead
     bool is_alive_;
 
+    QColor color_;
+
     // hold vec of neighbor cells to determine nextIteration
     std::vector<Cell*> neighbors_;
 
