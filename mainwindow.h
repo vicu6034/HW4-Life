@@ -35,14 +35,13 @@ private slots:
     void on_stepButton_clicked();
     void on_playButton_clicked();
     void on_pauseButton_clicked();
+    void on_resetButton_clicked();
 
     // default slot for speed slider
     void on_speedSlider_valueChanged(int value);
 
     // custom slot to trigger on every timeout of timer
     void TimerSlot();
-
-    void on_resetButton_clicked();
 
     void on_checkBox_0_toggled(bool checked);
 
