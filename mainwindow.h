@@ -36,11 +36,10 @@ private:
     QGraphicsScene *scene;
 
     CellMap *cell_map_;
-    double game_speed_;
-    bool paused_;
+    std::vector<GraphBar *> graph_bars_;
 
     QTimer *timer_;
-
-    std::vector<GraphBar *> graph_bars_;
+    int timer_speed_;
+    int current_turn_;
 };
 #endif // MAINWINDOW_H
