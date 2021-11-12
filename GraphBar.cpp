@@ -15,10 +15,12 @@ void GraphBar::SetIndex(int index) {
     update();
 }
 
+
 QRectF GraphBar::boundingRect() const {
     std::pair<int, int> pos = get_position();
     return QRectF(pos.first, pos.second, WIDTH, height_);
 }
+
 
 QPainterPath GraphBar::shape() const {
     QPainterPath path;
