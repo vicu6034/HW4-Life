@@ -57,10 +57,10 @@ void CellMap::Step() {
 }
 
 // Return what percent of cells are currently alive
-double CellMap::get_percent_alive() {
+int CellMap::get_percent_alive() {
     int num_alive = 0;
     for (unsigned int i = 0; i < NUM_CELLS; i++) {
         if (cells_[i]->is_alive()) num_alive++;
     }
-    return float(num_alive/NUM_CELLS);
+    return num_alive / 2;
 }

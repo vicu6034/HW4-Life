@@ -6,6 +6,7 @@
 
 class CellMap;
 class Cell;
+class GraphBar;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -39,5 +40,7 @@ private:
     bool paused_;
 
     QTimer *timer_;
+
+    std::vector<GraphBar *> graph_bars_;
 };
 #endif // MAINWINDOW_H

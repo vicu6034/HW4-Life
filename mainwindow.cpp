@@ -7,6 +7,7 @@
 
 #include "Cell.h"
 #include "CellMap.h"
+#include "GraphBar.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -53,13 +54,34 @@ MainWindow::MainWindow(QWidget *parent)
     // Initialize timer
     timer_ = new QTimer(this);
     connect(timer_, SIGNAL(timeout()), this, SLOT(TimerSlot()));
-    timer_->start(1000);
+
+    timer_->start(250);
 
     ui->speedLabel->setText("Speed: 1000");
+
+    GraphBar *b = new GraphBar(cell_map_->get_percent_alive());
+    b->SetIndex(0);
+    scene->addItem(b);
+    graph_bars_.push_back(b);
 }
 
 void MainWindow::TimerSlot() {
     cell_map_->Step();
+
+    GraphBar *b = new GraphBar(cell_map_->get_percent_alive());
+    graph_bars_.insert(graph_bars_.begin(), b);
+    scene->addItem(b);
+    for (unsigned int i = 0; i < graph_bars_.size(); i++) {
+        GraphBar *currentBar = graph_bars_[i];
+        scene->removeItem(currentBar);
+        if (i < 20) {
+            currentBar->SetIndex(i);
+            scene->addItem(currentBar);
+        } else {
+            graph_bars_.pop_back();
+            break;
+        }
+    }
 }
 
 MainWindow::~MainWindow() {

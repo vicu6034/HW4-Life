@@ -4,6 +4,7 @@
 #include <vector>
 
 class Cell;
+class GraphBar;
 
 class CellMap {
 public:
@@ -13,7 +14,7 @@ public:
     // Get a cell by indec
     Cell * get_cell(int index) { return cells_[index]; }
     // Get percent of alive cells
-    double get_percent_alive();
+    int get_percent_alive();
 
     // Method to determine the next cell map
     void Step();
