@@ -11,8 +11,6 @@
  * @param event mouse click that is caught
 */
 void Cell::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-    qDebug() << "cell clicked!";
-
     if (event->button() == Qt::LeftButton && !is_alive_) {
         //for left click cell becomes alive
         is_alive_ = true;
