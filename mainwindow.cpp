@@ -151,6 +151,20 @@ void MainWindow::on_speedSlider_valueChanged(int value) {
     ui->speedLabel->setText(q);
 }
 
+/*
+void MainWindow::on_resetButton_clicked() {
+    // remove old map from scene
+    for (int i = 0; i < CellMap::NUM_CELLS; i++) {
+        scene->removeItem(cell_map_->get_cell(i));
+    }
+    // make new map
+    cell_map_ = new CellMap();
+    // add new map to scene
+    for (int i = 0; i < CellMap::NUM_CELLS; i++) {
+        scene->addItem(cell_map_->get_cell(i));
+    }
+}
+*/
 // destructor
 MainWindow::~MainWindow() {
     delete ui;
