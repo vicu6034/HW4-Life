@@ -55,9 +55,11 @@ MainWindow::MainWindow(QWidget *parent)
     // Initialize timer
     timer_ = new QTimer(this);
     connect(timer_, SIGNAL(timeout()), this, SLOT(TimerSlot()));
-    // Start paused with timer at 0
-    timer_speed_ = 0;
-    ui->speedLabel->setText("Speed: 0");
+
+    // Start game with timer 1000
+    timer_speed_ = 1000;
+    timer_->start(timer_speed_);
+    ui->speedLabel->setText("Speed: 1.0");
 
     // Add bar for initial map
     GraphBar *b = new GraphBar(cell_map_->get_num_alive() / 2);
@@ -126,48 +128,25 @@ void MainWindow::on_stepButton_clicked() {
 
 // Start the timer when the play button is clicked
 void MainWindow::on_playButton_clicked() { 
-    if (timer_speed_ == 0) {
-        // if speed was 0, set speed to half
-        timer_speed_ = 750;
-        // set value on slider
-        ui->speedSlider->setValue(50);
-        // start timer
-        timer_->start(timer_speed_);
-    } else {
-        // if speed was not 0 (when theres a pause)
-        // then play with the last speed we were using
-        timer_->start(timer_speed_);
-        ui->speedSlider->setValue((1500-timer_speed_)/15);
-    }
-    // set label for current speed
-    std::string s = "Speed: " + std::to_string((1500-timer_speed_)/15);
-    QString q(const_cast<char*>(s.c_str()));
-    ui->speedLabel->setText(q);
+    // start timer with last speed
+    timer_->start(timer_speed_);
 }
 
 // Stop the timer when the pause button is clicked
 void MainWindow::on_pauseButton_clicked() {
     // stop timer
     timer_->stop();
-    // set speed label & slider to 0
-    ui->speedSlider->setValue(0);
-    std::string s = "Speed: " + std::to_string(0);
-    QString q(const_cast<char*>(s.c_str()));
-    ui->speedLabel->setText(q);
 }
 
 // Change timer speed to scale with the speedSlider changes
 void MainWindow::on_speedSlider_valueChanged(int value) {
-    if (value == 0) {
-        // make sure timer is stopped when slider is at 0
-        timer_->stop();
-    } else {
-        // convert value to timer speed & start timer
-        timer_speed_ = 1500 - (value * 15);
-        timer_->start(timer_speed_);
-    }
-    // set label for the current timer speed
-    std::string s = "Speed: " + std::to_string(value);
+    // convert value to timer speed and start timer
+    timer_speed_ = 1000-(value * 10);
+    timer_->start(timer_speed_);
+
+    // set label for new timer speed
+    float ts = float(timer_speed_)/1000.0;
+    std::string s = "Speed: " + std::to_string(ts);
     QString q(const_cast<char*>(s.c_str()));
     ui->speedLabel->setText(q);
 }
