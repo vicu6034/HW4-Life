@@ -51,10 +51,13 @@ std::vector<Cell*> CellMap::get_neighbors(int index) {
 
 // Determine the next state for the entire map
 void CellMap::Step() {
+    // store boolean for next values
     std::vector<bool> next_values;
     for (Cell *c : cells_) {
         next_values.push_back(c->nextIteration());
     }
+
+    // update all cells with corresponding next values
     for (int i = 0; i < NUM_CELLS; i++) {
         cells_[i]->SetAlive(next_values[i]);
     }
