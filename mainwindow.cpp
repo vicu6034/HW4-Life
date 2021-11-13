@@ -78,6 +78,8 @@ MainWindow::MainWindow(QWidget *parent)
     std::string pop_str = "Population: " + std::to_string(num_alive) + " (" + std::to_string(num_alive/2) + "%)";
     QString pop_q(const_cast<char*>(pop_str.c_str()));
     ui->popLabel->setText(pop_q);
+
+    Cell::SetReproduce(3, true);
 }
 
 void MainWindow::PerformStep() {
@@ -189,3 +191,43 @@ void MainWindow::on_speedSlider_valueChanged(int value) {
 MainWindow::~MainWindow() {
     delete ui;
 }
+
+void MainWindow::on_checkBox_0_stateChanged(int arg1) {
+    Cell::SetReproduce(0, arg1 > 0);
+}
+
+
+void MainWindow::on_checkBox_1_stateChanged(int arg1) {
+    Cell::SetReproduce(1, arg1 > 0);
+}
+
+
+void MainWindow::on_checkBox_2_stateChanged(int arg1) {
+    Cell::SetReproduce(2, arg1 > 0);
+}
+
+
+void MainWindow::on_checkBox_3_stateChanged(int arg1) {
+    Cell::SetReproduce(3, arg1 > 0);
+}
+
+
+void MainWindow::on_checkBox_4_stateChanged(int arg1) {
+    Cell::SetReproduce(4, arg1 > 0);
+}
+
+
+void MainWindow::on_checkBox_5_stateChanged(int arg1) {
+    Cell::SetReproduce(5, arg1 > 0);
+}
+
+
+void MainWindow::on_checkBox_6_stateChanged(int arg1) {
+    Cell::SetReproduce(6, arg1 > 0);
+}
+
+
+void MainWindow::on_checkBox_7_stateChanged(int arg1) {
+    Cell::SetReproduce(7, arg1 > 0);
+}
+

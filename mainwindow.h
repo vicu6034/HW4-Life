@@ -43,11 +43,9 @@ private slots:
     // custom slot to trigger on every timeout of timer
     void TimerSlot();
 
-    void on_checkBox_0_toggled(bool checked);
+    void on_checkBox_0_stateChanged(int arg1);
 
     void on_checkBox_1_stateChanged(int arg1);
-
-    void on_checkBox_0_stateChanged(int arg1);
 
     void on_checkBox_2_stateChanged(int arg1);
 
