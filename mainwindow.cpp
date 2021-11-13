@@ -78,8 +78,6 @@ MainWindow::MainWindow(QWidget *parent)
     std::string pop_str = "Population: " + std::to_string(num_alive) + " (" + std::to_string(num_alive/2) + "%)";
     QString pop_q(const_cast<char*>(pop_str.c_str()));
     ui->popLabel->setText(pop_q);
-
-    Cell::SetReproduce(3, true);
 }
 
 void MainWindow::PerformStep() {
@@ -151,12 +149,24 @@ void MainWindow::on_resetButton_clicked()
         scene->removeItem(cell_map_->get_cell(i));
     }
 
+    // remove old graph
+    for (unsigned int i = 0; i < graph_bars_.size(); i++) {
+        scene->removeItem(graph_bars_[i]);
+    }
+    graph_bars_.clear();
+
     // make new map
     cell_map_ = new CellMap();
     // add new map to scene
     for (int i = 0; i < CellMap::NUM_CELLS; i++) {
         scene->addItem(cell_map_->get_cell(i));
     }
+
+    // add new graph bar
+    GraphBar *b = new GraphBar(cell_map_->get_num_alive() / 2);
+    b->SetIndex(0);
+    scene->addItem(b);
+    graph_bars_.push_back(b);
 
     // reset turnLabel to 1
     current_turn_ = 1;

@@ -6,7 +6,7 @@
 
 #include "Cell.h"
 
-std::vector<bool> Cell::reproduce_ = {false, false, false, false, false, false, false, false};
+std::vector<bool> Cell::reproduce_ = {false, false, false, true, false, false, false, false};
 
 /*
  * Have a cell become alive for left click, and dead for right click
@@ -85,10 +85,7 @@ bool Cell::nextIteration() const {
             }
         }
         return false;
-        // case of reproduction
-//        return liveNeighbors == 3;
     }
-//    return true;
 }
 
 void Cell::SetReproduce(int index, bool active) {
