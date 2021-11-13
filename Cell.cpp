@@ -6,6 +6,9 @@
 
 #include "Cell.h"
 
+// Initialize the static reproduce vector for whether or not the neighbor
+// count corresponding with the given index should cause a dead cell to reproduce
+// (index 3 is true on game start)
 std::vector<bool> Cell::reproduce_ = {false, false, false, true, false, false, false, false};
 
 /*
@@ -34,7 +37,7 @@ void Cell::SetAlive(bool alive) {
     update();
 }
 
-// Set cell position
+// Set cell boundaries for clicking
 QRectF Cell::boundingRect() const {
     std::pair<int, int> pos = get_position();
     return QRectF(pos.first, pos.second, WIDTH, WIDTH);
@@ -55,6 +58,7 @@ void Cell::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidge
 
     QBrush b = painter->brush();
 
+    // Set the color on whether the cell is alive or not
     if (is_alive_) {
         painter->setBrush(QBrush(QColor(255,0,0)));
     } else {
@@ -79,6 +83,7 @@ bool Cell::nextIteration() const {
         // Whether or not to stay alive
         return liveNeighbors == 2 || liveNeighbors == 3;
     } else {
+        // Whether a dead cell should reproduce
         for (int i = 0; i < 8; i++) {
             if (Cell::reproduce_[i] && liveNeighbors == i) {
                 return true;
@@ -88,6 +93,11 @@ bool Cell::nextIteration() const {
     }
 }
 
+/*
+ * Sets the value of the reproduce vector at the given index
+ * @param index
+ * @param active
+ */
 void Cell::SetReproduce(int index, bool active) {
     Cell::reproduce_[index] = active;
 }
