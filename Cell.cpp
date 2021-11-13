@@ -6,13 +6,13 @@
 
 #include "Cell.h"
 
+std::vector<bool> Cell::reproduce_ = {false, false, false, true, false, false, false, false};
+
 /*
  * Have a cell become alive for left click, and dead for right click
  * @param event mouse click that is caught
 */
 void Cell::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-    qDebug() << "cell clicked!";
-
     if (event->button() == Qt::LeftButton && !is_alive_) {
         //for left click cell becomes alive
         is_alive_ = true;
@@ -79,8 +79,15 @@ bool Cell::nextIteration() const {
         // Whether or not to stay alive
         return liveNeighbors == 2 || liveNeighbors == 3;
     } else {
-        // case of reproduction
-        return liveNeighbors == 3;
+        for (int i = 0; i < 8; i++) {
+            if (Cell::reproduce_[i] && liveNeighbors == i) {
+                return true;
+            }
+        }
+        return false;
     }
-    return true;
+}
+
+void Cell::SetReproduce(int index, bool active) {
+    Cell::reproduce_[index] = active;
 }

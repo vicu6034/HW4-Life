@@ -25,8 +25,7 @@ std::vector<Cell*> CellMap::get_neighbors(int index) {
     //      g h i
 
     int d = index - 1;
-    if (d % 20 == 19) { d += 20; }
-    if (d < 0) { d += 20; }
+    if (d % 20 == 19 || d < 0) { d += 20; }
 
     int f = index + 1;
     if (f % 20 == 0) { f -= 20; }

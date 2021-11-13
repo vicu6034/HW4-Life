@@ -138,6 +138,52 @@ void MainWindow::on_pauseButton_clicked() {
     timer_->stop();
 }
 
+// Slot for resetting the game
+void MainWindow::on_resetButton_clicked()
+{
+    // stop timer
+    timer_->stop();
+
+    // remove old map from scene
+    for (int i = 0; i < CellMap::NUM_CELLS; i++) {
+        scene->removeItem(cell_map_->get_cell(i));
+    }
+
+    // remove old graph
+    for (unsigned int i = 0; i < graph_bars_.size(); i++) {
+        scene->removeItem(graph_bars_[i]);
+    }
+    graph_bars_.clear();
+
+    // make new map
+    cell_map_ = new CellMap();
+    // add new map to scene
+    for (int i = 0; i < CellMap::NUM_CELLS; i++) {
+        scene->addItem(cell_map_->get_cell(i));
+    }
+
+    // add new graph bar
+    GraphBar *b = new GraphBar(cell_map_->get_num_alive() / 2);
+    b->SetIndex(0);
+    scene->addItem(b);
+    graph_bars_.push_back(b);
+
+    // reset turnLabel to 1
+    current_turn_ = 1;
+    std::string turn_str = "Turn: " + std::to_string(current_turn_);
+    QString turn_q(const_cast<char*>(turn_str.c_str()));
+    ui->turnLabel->setText(turn_q);
+
+    // update populaton label
+    int num_alive = cell_map_->get_num_alive();
+    std::string pop_str = "Population: " + std::to_string(num_alive) + " (" + std::to_string(num_alive/2) + "%)";
+    QString pop_q(const_cast<char*>(pop_str.c_str()));
+    ui->popLabel->setText(pop_q);
+
+    // restart timer
+    timer_->start(timer_speed_);
+}
+
 // Change timer speed to scale with the speedSlider changes
 void MainWindow::on_speedSlider_valueChanged(int value) {
     // convert value to timer speed and start timer
@@ -155,3 +201,43 @@ void MainWindow::on_speedSlider_valueChanged(int value) {
 MainWindow::~MainWindow() {
     delete ui;
 }
+
+void MainWindow::on_checkBox_0_stateChanged(int arg1) {
+    Cell::SetReproduce(0, arg1 > 0);
+}
+
+
+void MainWindow::on_checkBox_1_stateChanged(int arg1) {
+    Cell::SetReproduce(1, arg1 > 0);
+}
+
+
+void MainWindow::on_checkBox_2_stateChanged(int arg1) {
+    Cell::SetReproduce(2, arg1 > 0);
+}
+
+
+void MainWindow::on_checkBox_3_stateChanged(int arg1) {
+    Cell::SetReproduce(3, arg1 > 0);
+}
+
+
+void MainWindow::on_checkBox_4_stateChanged(int arg1) {
+    Cell::SetReproduce(4, arg1 > 0);
+}
+
+
+void MainWindow::on_checkBox_5_stateChanged(int arg1) {
+    Cell::SetReproduce(5, arg1 > 0);
+}
+
+
+void MainWindow::on_checkBox_6_stateChanged(int arg1) {
+    Cell::SetReproduce(6, arg1 > 0);
+}
+
+
+void MainWindow::on_checkBox_7_stateChanged(int arg1) {
+    Cell::SetReproduce(7, arg1 > 0);
+}
+

@@ -35,12 +35,29 @@ private slots:
     void on_stepButton_clicked();
     void on_playButton_clicked();
     void on_pauseButton_clicked();
+    void on_resetButton_clicked();
 
     // default slot for speed slider
     void on_speedSlider_valueChanged(int value);
 
     // custom slot to trigger on every timeout of timer
     void TimerSlot();
+
+    void on_checkBox_0_stateChanged(int arg1);
+
+    void on_checkBox_1_stateChanged(int arg1);
+
+    void on_checkBox_2_stateChanged(int arg1);
+
+    void on_checkBox_3_stateChanged(int arg1);
+
+    void on_checkBox_4_stateChanged(int arg1);
+
+    void on_checkBox_5_stateChanged(int arg1);
+
+    void on_checkBox_6_stateChanged(int arg1);
+
+    void on_checkBox_7_stateChanged(int arg1);
 
 private:
     // Qt Ui and Scene

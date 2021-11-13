@@ -37,6 +37,8 @@ public:
     QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
 
+    static void SetReproduce(int index, bool active);
+
 protected:
     // handles what happens when the mouse is clicked
     // revive cell for left click, kill cell for right click
@@ -48,11 +50,15 @@ private:
     // represents if cell is alive or dead
     bool is_alive_;
 
+    QColor color_;
+
     // hold vec of neighbor cells to determine nextIteration
     std::vector<Cell*> neighbors_;
 
     // all cells have the same width
     static const int WIDTH = 20;
+
+    static std::vector<bool> reproduce_;
 
 }; // class cell inherits QGraphicsItem
 
